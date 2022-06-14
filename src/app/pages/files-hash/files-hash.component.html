@@ -1,0 +1,36 @@
+<h2 class="content-block">Files Hash</h2>
+<div class="content-block">
+
+  <dx-file-uploader [(disabled)]="blockButtons"
+                    accept="*"
+                    [(value)]="value"
+                    [showFileList]="false"
+                    uploadMode="useForm"
+                    [multiple]="true"></dx-file-uploader>
+  <dx-button stylingMode="outline"
+             [width]="120"
+             class="start-button"
+             [(disabled)]="blockButtons"
+             (onClick)="newFilesValues($event)">Start
+  </dx-button>
+  <div class="progress-info">File: {{nowHashedFile.filename}} </div>
+  <dx-progress-bar #progressBar
+                   [statusFormat]="formatLoading"
+                   [min]="0"
+                   [max]="nowHashedFile.fileSize"
+                   [value]="nowHashedFile.nowSize">
+  </dx-progress-bar>
+  <p>Selected files {{value.length}}</p>
+  <dx-list [dataSource]="listHashedFiles"
+           height="100%">
+    <div *dxTemplate="let item of 'item'">
+      <div>
+        <div>Filename: {{item.fileObj.name}}</div>
+        <div>xxhash64: {{item.fileHash}}</div>
+        <div>Size: {{SizeBytesToHum(item.fileObj.size)}}</div>
+        <div>Time: {{item.timeHash / 1000}}S</div>
+      </div>
+
+    </div>
+  </dx-list>
+</div>
